@@ -116,23 +116,23 @@ class TestChecker(unittest.TestCase):
         self.checker = Checker(['benchmark1.txt', 'benchmark2.txt', 'benchmark3.txt', 'benchmark4.txt'])
 
     def test_check_benchmark_completion_all_completed(self):
-        benchmark_courses = ['course1', 'course2', 'course3']
-        completed_courses = ['course1', 'course2', 'course3']
+        benchmark_courses = ['STAT 100', 'INST 126', 'INST 201']
+        completed_courses = ['STAT 100', 'INST 126', 'INST 201']
         self.assertTrue(self.checker.check_benchmark_completion(benchmark_courses, completed_courses))
 
     def test_check_benchmark_completion_not_completed(self):
-        benchmark_courses = ['course1', 'course2', 'course3']
-        completed_courses = ['course1', 'course2']
+        benchmark_courses = ['STAT 100', 'INST 126', 'INST 201']
+        completed_courses = ['STAT 100', 'INST 126']
         self.assertFalse(self.checker.check_benchmark_completion(benchmark_courses, completed_courses))
 
     def test_get_completed_benchmarks(self):
-        completed_courses = ['course1', 'course2', 'course3', 'course4']
-        expected = ['benchmark1', 'benchmark3']
+        completed_courses = ['PSYC 100', 'MATH 115', 'INST 201', 'INST 126', 'STAT 100']
+        expected = ['benchmark1', 'benchmark2']
         self.assertEqual(self.checker.get_completed_benchmarks(completed_courses), expected)
 
     def test_get_incomplete_benchmarks(self):
-        completed_courses = ['course1', 'course2', 'course3']
-        expected = ['benchmark2', 'benchmark4']
+        completed_courses = ['PSYC 100', 'MATH 115', 'INST 201', 'INST 126', 'STAT 100']
+        expected = ['benchmark3', 'benchmark4']
         self.assertEqual(self.checker.get_incomplete_benchmarks(completed_courses), expected)
 
 if __name__ == '__main__':
