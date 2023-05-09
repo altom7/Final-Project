@@ -106,10 +106,42 @@ class Checker:
         for benchmark_name in incomplete_benchmarks:
             print(f'- {benchmark_name}')
 
+class CourseProgress:
+    def __init__(self, user_progress):
+        self.user_progress = user_progress
+        self.finished_benchmarks = []
+        self.unfinished_benchmarks = []
 
+        for course in self.user_progress:
+            for benchmark in self.user_progress[course]:
+                if self.user_progress[course][benchmark]:
+                    self.finished_benchmarks.append((course, benchmark))
+                else:
+                    self.unfinished_benchmarks.append((course, benchmark))
 
+    def get_unfinished_courses(self):
+        """ Prints the names of courses with unfinished benchmarks to the console.
 
+        Args:
+           get_unfinished_courses (list): a set of courses that have unfinished benchmarks.
+        """
+        unfinished_courses = set()
+        for course, benchmark in self.unfinished_benchmarks:
+            unfinished_courses.add(course)
+        return unfinished_courses
 
+    def get_course_for_benchmark(self, benchmark_name):
+        """ Given a benchmark name, returns the course that the user needs to complete in order to finish that benchmark.
+
+        Args:
+          get_course_for_benchmark (list): a set of courses that are needed to complete unfinished benchmarks.
+        """
+        for course, benchmarks in self.user_progress.items():
+            if benchmark_name in benchmarks and not benchmarks[benchmark_name]:
+                return course
+        return None            
+            
+            
 class TestChecker(unittest.TestCase):
     
     def setUp(self):
