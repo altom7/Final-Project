@@ -11,7 +11,7 @@ to fulfill the required benchmarks that have not yet been completed.Our program 
 benchmarks they have not completed, and which courses they must complete in order to fulfill the required benchmarks that have not yet been completed.
 
 To run the program from the command line, make sure to set your working directory to wherever our program is stored, along with the 4 text files.
-Next, you can write 'python3 benchmark_checker.py' if you have a Mac device or 'python benchmark_checker.py' if you don't in the command line in a terminal to run the program.
+Next, you can write 'python3 benchmark_checker.py' if you have a Mac device or 'python benchmark_checker' if you don't in the command line in a terminal to run the program.
 
 We did not require any outside sources to develop the program, other than knowledge from the class and previous classes, as well as the INST 326 class slides.
 """
@@ -152,7 +152,7 @@ class CourseProgress:
 
 
 class TestChecker(unittest.TestCase):
-    """ A class to perform unit tests.
+    """ A class to perform unit tests for the Checker class.
     """
     def setUp(self):
         self.checker = Checker()
@@ -187,6 +187,8 @@ class TestChecker(unittest.TestCase):
         self.assertListEqual(incomplete_benchmarks, ['benchmark3.txt', 'benchmark4.txt'])
 
 class TestCourseProgress(unittest.TestCase):
+    """ A class to perform unit tests for the CourseProgress class.
+    """
 
     def test_print_remaining_courses(self):
         
@@ -201,5 +203,3 @@ class TestCourseProgress(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
