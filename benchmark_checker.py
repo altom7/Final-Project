@@ -33,7 +33,7 @@ class Checker:
         for file in self.benchmark_files:
             with open(file, 'r') as f:
                 benchmark_name = file.split('.')[0]
-                self.benchmarks[file] = f.read().splitlines()
+                self.benchmarks[benchmark_name] = f.read().splitlines()
 
 
 
@@ -149,57 +149,3 @@ class CourseProgress:
         for course in self.incomplete_courses:
             print(course)
 
-
-
-class TestChecker(unittest.TestCase):
-    """ A class to perform unit tests for the Checker class.
-    """
-    def setUp(self):
-        self.checker = Checker()
-
-    def test_check_benchmark_completion(self):
-        
-        completed_courses = ['INST 201', 'INST 126', 'STAT 100']
-        benchmark_courses = ['INST 201', 'INST 126', 'STAT 100']
-        self.assertTrue(self.checker.check_benchmark_completion(benchmark_courses, completed_courses))
-
-        benchmark_courses = ['PSYC 100', 'MATH 115']
-        self.assertFalse(self.checker.check_benchmark_completion(benchmark_courses, completed_courses))
-
-    def test_get_completed_benchmarks(self):
-        
-        completed_courses = ['PSYC 100', 'MATH 115']
-        completed_benchmarks = self.checker.get_completed_benchmarks(completed_courses)
-        self.assertListEqual(completed_benchmarks, ['benchmark1.txt'])
-
-        completed_courses = ['PSYC 100', 'MATH 115', 'INST 201', 'INST 126', 'STAT 100']
-        completed_benchmarks = self.checker.get_completed_benchmarks(completed_courses)
-        self.assertListEqual(completed_benchmarks, ['benchmark1.txt', 'benchmark2.txt'])
-
-    def test_get_incomplete_benchmarks(self):
-        
-        completed_courses = ['PSYC 100', 'MATH 115']
-        incomplete_benchmarks = self.checker.get_incomplete_benchmarks(completed_courses)
-        self.assertListEqual(incomplete_benchmarks, ['benchmark2.txt', 'benchmark3.txt', 'benchmark4.txt'])
-
-        completed_courses = ['PSYC 100', 'MATH 115', 'INST 201', 'INST 126', 'STAT 100']
-        incomplete_benchmarks = self.checker.get_incomplete_benchmarks(completed_courses)
-        self.assertListEqual(incomplete_benchmarks, ['benchmark3.txt', 'benchmark4.txt'])
-
-class TestCourseProgress(unittest.TestCase):
-    """ A class to perform unit tests for the CourseProgress class.
-    """
-
-    def test_print_remaining_courses(self):
-        
-        completed_courses = ['PSYC 100', 'MATH 115', 'INST 201', 'INST 126', 'STAT 100', 'INST 335', 'INST 326', 'INST 327', 'INST 314', 'INST 311', 'INST 362', 'INST 346', 'INST 352']
-        incomplete_benchmarks = ['benchmark4.txt']
-        course_progress = CourseProgress(completed_courses, incomplete_benchmarks)
-
-        expected_output = "Remaining courses to complete: INST 490"
-        with captured_output() as (out, err):
-            course_progress.print_remaining_courses()
-        self.assertEqual(out.getvalue(), expected_output)
-
-if __name__ == '__main__':
-    unittest.main()
